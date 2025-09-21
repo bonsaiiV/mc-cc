@@ -1,8 +1,13 @@
 local target = tonumber(arg[1])
+local dist = 0
 
-while(target > 0) do
+while(target > dist) do
     turtle.dig()
     turtle.forward()
     turtle.digDown()
-    target = target-1
+    dist = dist+1
+end
+while (dist > 0) do
+    turtle.back()
+    dist = dist-1
 end
