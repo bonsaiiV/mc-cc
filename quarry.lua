@@ -95,4 +95,4 @@ local function quarryAll()
     end
 end
 quarryAll()
-print("actual fuel use:", startFuel-turtle.getFuelLevel)
+print("actual fuel use:", startFuel-turtle.getFuelLevel())
