@@ -1,11 +1,27 @@
 local target = {tonumber(arg[1]), tonumber(arg[2]), tonumber(arg[3])}
 local pos = {0, 0, 0}
 
+local function safe_up()
+    local hasBlock, _ = turtle.inspectUp()
+    while hasBlock do
+        turtle.digUp()
+        hasBlock, _ = turtle.inspectUp()
+    end
+    turtle.up()
+end
+local function safe_fwd()
+    local hasBlock, _ = turtle.inspectUp()
+    while hasBlock do
+        turtle.digUp()
+        hasBlock, _ = turtle.inspectUp()
+    end
+    turtle.up()
+end
 local down = turtle.down
-local up = turtle.up
+local up = safe_up
 local digDown = turtle.digDown
 local digUp = turtle.digUp
-local forward = turtle.forward
+local forward = safe_fwd
 local dig = turtle.dig
 local turnRight = turtle.turnRight
 local turnLeft = turtle.turnLeft
@@ -23,7 +39,7 @@ end
 if (target[3] < 0) then
     target[3] = target[3] * (-1)
     up = turtle.down
-    down = turtle.up
+    down = safe_up
     digUp = turtle.digDown
     digDown = turtle.digUp
 end
