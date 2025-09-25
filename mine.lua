@@ -2,6 +2,7 @@ local target = tonumber(arg[1])
 local dist = 0
 
 while(target > dist) do
+    turtle.dig()
     local has_block, data = turtle.inspect()
     if has_block then
         if (data.name == "minecraft:lava") then
@@ -9,7 +10,6 @@ while(target > dist) do
         end
         print(data.name)
     end
-    turtle.dig()
     turtle.forward()
     turtle.digUp()
     dist = dist+1
