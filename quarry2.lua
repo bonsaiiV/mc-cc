@@ -77,15 +77,19 @@ local function quarryLayer(target)
         end
         if turn_direction_right then
             turnRight()
-            forward()
-            dig()
-            forward()
-            turnRight()
         else
             turnLeft()
+        end
+        if test_full() then
+            forward_and_empty()
+        else
             forward()
-            dig()
-            forward()
+        end
+        dig()
+        forward()
+        if turn_direction_right then
+            turnRight()
+        else
             turnLeft()
         end
         turn_direction_right = not turn_direction_right

@@ -64,3 +64,30 @@ function dig_and_move()
     dig()
     forward()
 end
+function empty_inventory(max_slot)
+        for slot=1, 1, max_slot do
+            turtle.select(slot)
+            turtle.drop()
+        end
+end
+function place_and_empty()
+    turtle.select(16)
+    local item_detail = turtle.getItemDetail()
+    if not (item_detail == nil) and (item_detail.name == "minecraft:barrel" or item_detail.name == "minecraft:chest") then
+        turtle.place()
+        empty_inventory(15)
+        turtle.select(16)
+    end
+end
+function forward_and_empty()
+    forward()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    place_and_empty()
+    turtle.turnLeft()
+    turtle.turnLeft()
+end
+function test_full()
+    turtle.select(14)
+    return not (turtle.getItemDetail() == nil)
+end
