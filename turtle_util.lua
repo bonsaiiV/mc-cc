@@ -11,15 +11,32 @@ function up()
 end
 digDown = turtle.digDown
 function digUp()
-    while turtle.digUp() do
-    end
+    while turtle.digUp() do end
 end
-
-forward = turtle.forward
-back = turtle.back
-dig = turtle.dig
-turnRight = turtle.turnRight
-turnLeft = turtle.turnLeft
+function dig()
+    while turtle.dig() do end
+end
+local pos_1_updates = {
+    0, 1, 0, -1, 0
+}
+function forward()
+    pos[1] = pos[1] + pos_1_updates[facing+2]
+    pos[2] = pos[2] + pos_1_updates[facing+1]
+    turtle.forward()
+end
+function back()
+    pos[1] = pos[1] - pos_1_updates[facing+2]
+    pos[2] = pos[2] - pos_1_updates[facing+1]
+    turtle.back()
+end
+function turnRight()
+    facing = (facing + 1) % 4
+    turtle.turnRight()
+end
+function turnLeft()
+    facing = (facing + 3) % 4
+    turtle.turnLeft()
+end
 function digLeft()
     turnLeft()
     dig()
