@@ -12,6 +12,7 @@ end
 local function digShaft(len, included_sides)
     while len > 1 do
         quarryStep(included_sides, dig_and_move)
+        len = len - 1
     end
     quarryStep(included_sides, noop)
 end
@@ -135,11 +136,20 @@ local function quarryAll(target)
         row_start_offset = not row_end_offset
         row_end_offset = tmp
 
-        digDown()
-        down()
-        if target[3]-pos[3] > 1 then
+        if target > 0 then
+            digUp()
+            up()
+            if target[3]-pos[3] > 1 then
+                digUp()
+                up()
+            end
+        else
             digDown()
             down()
+            if target[3]-pos[3] > 1 then
+                digDown()
+                down()
+            end
         end
     end
     quarryLayer()
