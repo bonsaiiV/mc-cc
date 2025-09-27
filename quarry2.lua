@@ -3,7 +3,7 @@ local startFuel = turtle.getFuelLevel()
 local turn_direction_right = true
 
 local function quarryStep(dig_sides, move)
-    for dig_side in dig_sides.values() do
+    for _, dig_side in pairs(dig_sides) do
         dig_side()
     end
     move()
