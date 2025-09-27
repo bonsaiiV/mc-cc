@@ -16,8 +16,8 @@ local function tryPlaceDown()
     local has_block, _ = turtle.inspectDown()
     if has_block then return end
     if turtle.getItemCount() == 0 then
-        if selectNextSlot() then
-            return
+        if not selectNextSlot() then
+            return false
         end
     end
     turtle.placeDown()
@@ -28,9 +28,9 @@ local function tryPlaceLeft()
     local has_block, _ = turtle.inspect()
     if has_block then return end
     if turtle.getItemCount() == 0 then
-        if selectNextSlot() then
+        if not selectNextSlot() then
             turnRight()
-            return
+            return false
         end
     end
     turtle.place()
@@ -42,9 +42,9 @@ local function tryPlaceRight()
     local has_block, _ = turtle.inspect()
     if has_block then return end
     if turtle.getItemCount() == 0 then
-        if selectNextSlot() then
+        if not selectNextSlot() then
             turnLeft()
-            return
+            return false
         end
     end
     turtle.place()
