@@ -136,7 +136,7 @@ local function quarryAll(target)
         row_start_offset = not row_end_offset
         row_end_offset = tmp
 
-        if target > 0 then
+        if target[3] > 0 then
             digUp()
             up()
             if target[3]-pos[3] > 1 then
