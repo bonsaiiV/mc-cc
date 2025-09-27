@@ -14,7 +14,7 @@ end
 
 local function tryPlaceDown()
     local has_block, _ = turtle.inspectDown()
-    if has_block then return end
+    if has_block then return true end
     if turtle.getItemCount() == 0 then
         if not selectNextSlot() then
             return false
@@ -26,7 +26,10 @@ end
 local function tryPlaceLeft()
     turnLeft()
     local has_block, _ = turtle.inspect()
-    if has_block then return end
+    if has_block then 
+        turnRight()
+        return true 
+    end
     if turtle.getItemCount() == 0 then
         if not selectNextSlot() then
             turnRight()
@@ -38,9 +41,12 @@ local function tryPlaceLeft()
 end
 
 local function tryPlaceRight()
-    turnLeft()
+    turnRight()
     local has_block, _ = turtle.inspect()
-    if has_block then return end
+    if has_block then 
+        turnLeft()
+        return true
+    end
     if turtle.getItemCount() == 0 then
         if not selectNextSlot() then
             turnLeft()
