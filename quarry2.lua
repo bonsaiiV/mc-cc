@@ -102,7 +102,7 @@ local function quarryAll(target)
     if target[2] % 2 == 0 then
         row_end_offset = true
     end
-    while remaining_rows > 1 do
+    while target[3]-pos[3] > 2 do
         if row_start_offset then
             if turn_direction_right then
                 turnRight()
@@ -135,10 +135,9 @@ local function quarryAll(target)
         row_start_offset = not row_end_offset
         row_end_offset = tmp
 
-        remaining_rows = remaining_rows-2
         digDown()
         down()
-        if remaining_rows > 0 then
+        if target[3]-pos[3] > 1 then
             digDown()
             down()
         end
