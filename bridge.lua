@@ -21,6 +21,7 @@ local function tryPlaceDown()
         end
     end
     turtle.placeDown()
+    return true
 end
 
 local function tryPlaceLeft()
@@ -38,6 +39,7 @@ local function tryPlaceLeft()
     end
     turtle.place()
     turnRight()
+    return true
 end
 
 local function tryPlaceRight()
@@ -55,6 +57,7 @@ local function tryPlaceRight()
     end
     turtle.place()
     turnLeft()
+    return true
 end
 
 while true do
