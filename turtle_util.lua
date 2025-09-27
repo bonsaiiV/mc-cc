@@ -20,27 +20,43 @@ local pos_1_updates = {
     0, 1, 0, -1, 0
 }
 function forward()
-    pos[1] = pos[1] + pos_1_updates[facing+2]
-    pos[2] = pos[2] + pos_1_updates[facing+1]
-    turtle.forward()
+    if turtle.forward() then
+        pos[1] = pos[1] + pos_1_updates[facing+2]
+        pos[2] = pos[2] + pos_1_updates[facing+1]
+        return true
+    else
+        return false
+    end
 end
 function back()
-    pos[1] = pos[1] - pos_1_updates[facing+2]
-    pos[2] = pos[2] - pos_1_updates[facing+1]
-    turtle.back()
+    if turtle.back() then
+        pos[1] = pos[1] - pos_1_updates[facing+2]
+        pos[2] = pos[2] - pos_1_updates[facing+1]
+        return true
+    else
+        return false
+    end
 end
 function turnRight()
-    facing = (facing + 1) % 4
-    turtle.turnRight()
+    if turtle.turnRight() then
+        facing = (facing + 1) % 4
+        return true
+    else
+        return false
+    end
 end
 function turnLeft()
-    facing = (facing + 3) % 4
-    turtle.turnLeft()
+    if turtle.turnLeft() then
+        facing = (facing + 3) % 4
+        return true
+    else
+        return false
+    end
 end
 function turn_to(target_facing)
+    if target_facing > 3 then return false end
     if target_facing == (facing+1)%4 then
-        turnRight()
-        return
+        return turnRight()
     else
         while not (facing == target_facing) do
             turnLeft()
@@ -123,7 +139,7 @@ function move_to_clamped(target, min, max)
 end
 
 function empty_inventory(max_slot)
-        for slot=1, 1, max_slot do
+        for slot=1, max_slot, 1 do
             turtle.select(slot)
             turtle.drop()
         end
@@ -146,8 +162,23 @@ function forward_and_empty()
     turtle.turnLeft()
 end
 function test_full()
-    turtle.select(14)
+    turtle.select(13)
     local ret = not (turtle.getItemDetail() == nil)
     turtle.select(1)
     return ret
 end
+
+function quarryStep(dig_sides, move)
+    for dig_side in dig_sides.values() do
+        dig_side()
+    end
+    move()
+end
+
+function digShaft(len, included_sides)
+    while len > 1 do
+        quarryStep(included_sides, dig_and_move)
+    end
+    quarryStep(included_sides, noop)
+end
+
