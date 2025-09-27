@@ -37,6 +37,16 @@ function turnLeft()
     facing = (facing + 3) % 4
     turtle.turnLeft()
 end
+function turn_to(target_facing)
+    if target_facing == (facing+1)%4 then
+        turnRight()
+        return
+    else
+        while not (facing == target_facing) do
+            turnLeft()
+        end
+    end
+end
 function digLeft()
     turnLeft()
     dig()
@@ -64,6 +74,54 @@ function dig_and_move()
     dig()
     forward()
 end
+function dig_and_move_up()
+    dig()
+    forward()
+end
+
+function move_to(target)
+    if target[1] > pos[1] then
+        turn_to(0)
+    end
+    if target[1] < pos[1] then
+        turn_to(2)
+    end
+    while not (target[1] == pos[1]) do
+        dig_and_move()
+    end
+
+    if target[1] > pos[1] then
+        turn_to(1)
+    end
+    if target[1] < pos[1] then
+        turn_to(3)
+    end
+    while not (target[2] == pos[2]) do
+        dig_and_move()
+    end
+
+    while not (target[3] == pos[3]) do
+        dig_and_move_up()
+    end
+end
+function move_by(target)
+    for d=1, 3, 1 do
+        target[d] = target[d] + pos[d]
+    end
+    move_to(target)
+end
+function move_to_clamped(target, min, max)
+    for d=1, 3, 1 do
+        if target[d] < min[d] then
+            target[d] = min[d]
+        end
+        if target[d] > max[d] then
+            target[d] = max[d]
+        end
+    end
+    move_to(target)
+end
+
 function empty_inventory(max_slot)
         for slot=1, 1, max_slot do
             turtle.select(slot)
@@ -76,7 +134,7 @@ function place_and_empty()
     if not (item_detail == nil) and (item_detail.name == "minecraft:barrel" or item_detail.name == "minecraft:chest") then
         turtle.place()
         empty_inventory(15)
-        turtle.select(16)
+        turtle.select(1)
     end
 end
 function forward_and_empty()
@@ -89,5 +147,7 @@ function forward_and_empty()
 end
 function test_full()
     turtle.select(14)
-    return not (turtle.getItemDetail() == nil)
+    local ret = not (turtle.getItemDetail() == nil)
+    turtle.select(1)
+    return ret
 end
