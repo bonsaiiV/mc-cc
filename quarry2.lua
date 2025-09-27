@@ -70,10 +70,21 @@ local function quarryShaft(target)
     digShaft(target[1], included_sides)
 end
 
+local function layerDone(is_increasing, p, t)
+    if is_increasing then
+        return math.abs(p-t) <= 2
+    else
+        return math.abs(p) <= 1
+    end
+end
 local function quarryLayer(target)
+    local is_increasing = false
+    if pos[2] == 0 or math.abs(pos[2]) == 1 then
+        is_increasing = true
+    end
     while true do
         quarryShaft(target)
-        if (pos[2]+2 > target[2]) then
+        if layerDone(is_increasing, pos[2], target[2]) then
             break
         end
         if turn_direction_right then
@@ -103,7 +114,7 @@ local function quarryAll(target)
     if target[2] % 2 == 0 then
         row_end_offset = true
     end
-    while target[3]-pos[3] > 2 do
+    while target[3]-pos[3] > 1 do
         if row_start_offset then
             if turn_direction_right then
                 turnRight()
@@ -152,7 +163,7 @@ local function quarryAll(target)
             end
         end
     end
-    quarryLayer()
+    quarryLayer(target)
 end
 quarryAll({tonumber(arg[1]), tonumber(arg[2]), tonumber(arg[3])})
 print("actual fuel use:", startFuel-turtle.getFuelLevel())
