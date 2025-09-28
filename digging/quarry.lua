@@ -1,21 +1,6 @@
-require "turtle_util"
+require "util.turtle"
 local startFuel = turtle.getFuelLevel()
 local turn_direction_right = true
-
-local function quarryStep(dig_sides, move)
-    for _, dig_side in pairs(dig_sides) do
-        dig_side()
-    end
-    move()
-end
-
-local function digShaft(len, included_sides)
-    while len > 1 do
-        quarryStep(included_sides, dig_and_move)
-        len = len - 1
-    end
-    quarryStep(included_sides, noop)
-end
 
 local function quarryShaft(target)
     local included_sides = {}
@@ -39,14 +24,14 @@ local function quarryShaft(target)
             if ((pos[2] == 1) or (pos[2]-2 == target[2])) then
                 table.insert(included_sides, digLeft)
             end
-            if not (pos[2]+1 == target[2]) or ((target[2] < 0) and not (pos[2]) == 0) then
+            if not (pos[2]+1 == target[2]) or ((target[2] < 0) and not (pos[2] == 0)) then
                 table.insert(included_sides, digRight)
             end
         else
             if ((pos[2] == -1) or (pos[2]+2 == target[2])) then
                 table.insert(included_sides, digLeft)
             end
-            if not (pos[2]-1 == target[2]) or ((target[2] > 0) and not (pos[2]) == 0) then
+            if not (pos[2]-1 == target[2]) or ((target[2] > 0) and not (pos[2] == 0)) then
                 table.insert(included_sides, digRight)
             end
         end
@@ -55,14 +40,14 @@ local function quarryShaft(target)
             if ((pos[2] == 1) or (pos[2]-2 == target[2])) then
                 table.insert(included_sides, digRight)
             end
-            if not (pos[2]+1 == target[2]) or ((target[2] < 0) and not (pos[2]) == 0) then
+            if not (pos[2]+1 == target[2]) or ((target[2] < 0) and not (pos[2] == 0)) then
                 table.insert(included_sides, digLeft)
             end
         else
             if ((pos[2] == -1) or (pos[2]+2 == target[2])) then
                 table.insert(included_sides, digRight)
             end
-            if not (pos[2]-1 == target[2]) or ((target[2] > 0) and not (pos[2]) == 0) then
+            if not (pos[2]-1 == target[2]) or ((target[2] > 0) and not (pos[2] == 0)) then
                 table.insert(included_sides, digLeft)
             end
         end
