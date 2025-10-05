@@ -25,7 +25,7 @@ goto exit
 while turtle.getFuelLevel() < 19000 do
     local has_block, block_info = turtle.inspect()
     if not has_block then break end
-    if (block_info.name == "minecraft.lava_cauldron") then
+    if (block_info.name == "minecraft:lava_cauldron") then
         turtle.place()
         turtle.refuel()
     end
