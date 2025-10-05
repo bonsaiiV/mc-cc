@@ -139,7 +139,7 @@ function move_to_clamped(target, min, max)
 end
 
 function empty_inventory(max_slot)
-        for slot=1, max_slot, 1 do
+        for slot=max_slot, 1, -1 do
             turtle.select(slot)
             turtle.drop()
         end
@@ -161,8 +161,8 @@ function forward_and_empty()
     turtle.turnLeft()
     turtle.turnLeft()
 end
-function test_full()
-    turtle.select(13)
+function test_full(test_slot)
+    turtle.select(test_slot)
     local ret = not (turtle.getItemDetail() == nil)
     turtle.select(1)
     return ret

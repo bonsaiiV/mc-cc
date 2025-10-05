@@ -77,7 +77,7 @@ local function quarryLayer(target)
         else
             turnLeft()
         end
-        if test_full() then
+        if test_full(13) then
             forward_and_empty()
         else
             forward()

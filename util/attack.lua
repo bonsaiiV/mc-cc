@@ -2,12 +2,9 @@ require "turtle"
 
 while true do
     turtle.attack()
-    if test_full() then
+    if test_full(16) then
         turtle.turnRight()
-        for slot=1, 16, 1 do
-            turtle.select(slot)
-            turtle.drop()
-        end
+        empty_inventory(16)
         turtle.turnLeft()
     end
 end
