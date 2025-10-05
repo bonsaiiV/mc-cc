@@ -1,6 +1,11 @@
 pos = {0, 0, 0}
 facing = 0
-
+avoided_blocks = {"minecraft:deepslate_bricks", "minecraft:spawner"}
+function set_avoided_blocks(blocks)
+    for _,block in pairs(blocks) do
+        table.insert(avoided_blocks, block)
+    end
+end
 function down()
     pos[3] = pos[3] - 1
     turtle.down()
@@ -9,12 +14,32 @@ function up()
     pos[3] = pos[3] + 1
     turtle.up()
 end
-digDown = turtle.digDown
+function digDown()
+    local has_block, data = turtle.inspectDown()
+    if not has_block then return true end
+    for _, avoided_block in avoided_blocks do
+        if avoided_block == data.name then return false end
+    end
+    while turtle.digDown() do end
+    return true
+end
 function digUp()
+    local has_block, data = turtle.inspectUp()
+    if not has_block then return true end
+    for _, avoided_block in avoided_blocks do
+        if avoided_block == data.name then return false end
+    end
     while turtle.digUp() do end
+    return true
 end
 function dig()
+    local has_block, data = turtle.inspect()
+    if not has_block then return true end
+    for _, avoided_block in avoided_blocks do
+        if avoided_block == data.name then return false end
+    end
     while turtle.dig() do end
+    return true
 end
 local pos_1_updates = {
     0, 1, 0, -1, 0
@@ -65,13 +90,15 @@ function turn_to(target_facing)
 end
 function digLeft()
     turnLeft()
-    dig()
+    local ret = dig()
     turnRight()
+    return ret
 end
 function digRight()
     turnRight()
-    dig()
+    local ret = dig()
     turnLeft()
+    return ret
 end
 digs = {
     dig
@@ -80,15 +107,19 @@ digs = {
     ,digLeft
     ,digRight
 }
-function noop(...) end
+function noop(...) return true end
 moves = {
     noop
     ,forward
     ,back
 }
 function dig_and_move()
-    dig()
-    forward()
+    if dig() then
+        forward()
+        return true
+    else
+        return false
+    end
 end
 function dig_and_move_up()
     dig()
@@ -172,13 +203,14 @@ function quarryStep(dig_sides, move)
     for dig_side in dig_sides.values() do
         dig_side()
     end
-    move()
+    return move()
 end
 
 function digShaft(len, included_sides)
     while len > 1 do
-        quarryStep(included_sides, dig_and_move)
+        if not quarryStep(included_sides, dig_and_move) then
+            return false
+        end
     end
-    quarryStep(included_sides, noop)
+    return quarryStep(included_sides, noop)
 end
-
