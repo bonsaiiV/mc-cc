@@ -214,3 +214,13 @@ function digShaft(len, included_sides)
     end
     return quarryStep(included_sides, noop)
 end
+
+function find_in_inventory(name)
+    for slot=1, 16, 1 do
+        if turtle.getItemDetail(slot).name == name then
+            turtle.select(slot)
+            return true
+        end
+    end
+    return false
+end
