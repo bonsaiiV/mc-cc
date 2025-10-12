@@ -17,7 +17,7 @@ end
 function digDown()
     local has_block, data = turtle.inspectDown()
     if not has_block then return true end
-    for _, avoided_block in avoided_blocks do
+    for _, avoided_block in pairs(avoided_blocks) do
         if avoided_block == data.name then return false end
     end
     while turtle.digDown() do end
@@ -26,7 +26,7 @@ end
 function digUp()
     local has_block, data = turtle.inspectUp()
     if not has_block then return true end
-    for _, avoided_block in avoided_blocks do
+    for _, avoided_block in pairs(avoided_blocks) do
         if avoided_block == data.name then return false end
     end
     while turtle.digUp() do end
@@ -35,7 +35,7 @@ end
 function dig()
     local has_block, data = turtle.inspect()
     if not has_block then return true end
-    for _, avoided_block in avoided_blocks do
+    for _, avoided_block in pairs(avoided_blocks) do
         if avoided_block == data.name then return false end
     end
     while turtle.dig() do end
