@@ -1,5 +1,6 @@
 require "util.turtle"
 
+local is_upper = arg[1] == "upper"
 turtle.select(1)
 
 local function selectNextSlot()
@@ -13,8 +14,8 @@ local function selectNextSlot()
 end
 
 local function tryPlaceDown()
-    local has_block, _ = turtle.inspectDown()
-    if has_block then return true end
+    local has_block, data = turtle.inspectDown()
+    if has_block and data.name ~= "minecraft:lava" then return true end
     if turtle.getItemCount() == 0 then
         if not selectNextSlot() then
             return false
@@ -23,13 +24,31 @@ local function tryPlaceDown()
     turtle.placeDown()
     return true
 end
+local function tryPlaceUp()
+    local has_block, data = turtle.inspectUp()
+    if has_block and data.name ~= "minecraft:lava" then return true end
+    if turtle.getItemCount() == 0 then
+        if not selectNextSlot() then
+            return false
+        end
+    end
+    turtle.placeUp()
+    return true
+end
+
+local tryPlace
+if is_upper then
+    tryPlace = tryPlaceUp
+else
+    tryPlace = tryPlaceDown
+end
 
 local function tryPlaceLeft()
     turnLeft()
-    local has_block, _ = turtle.inspect()
-    if has_block then 
+    local has_block, data = turtle.inspect()
+    if has_block and data.name ~= "minecraft:lava" then
         turnRight()
-        return true 
+        return true
     end
     if turtle.getItemCount() == 0 then
         if not selectNextSlot() then
@@ -44,8 +63,8 @@ end
 
 local function tryPlaceRight()
     turnRight()
-    local has_block, _ = turtle.inspect()
-    if has_block then 
+    local has_block, data = turtle.inspect()
+    if has_block and data.name ~= "minecraft:lava" then
         turnLeft()
         return true
     end
@@ -65,7 +84,7 @@ while true do
         back()
         return
     end
-    if not tryPlaceDown() then
+    if not tryPlace() then
         break
     end
     if not tryPlaceLeft() then
