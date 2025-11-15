@@ -9,9 +9,15 @@ local function rightCorner()
     turtle.forward()
 end
 
+local function wait_for_regrow()
+    os.sleep(300)
+    turtle.forward()
+end
+
 local control_blocks = {}
 control_blocks["minecraft:red_concrete"] = leftCorner
 control_blocks["minecraft:blue_concrete"] = rightCorner
+control_blocks["minecraft:black_concrete"] = wait_for_regrow
 
 local crops = {}
 crops["minecraft:nether_wart"] = {max_age = 3, seed_name = "minecraft:nether_wart"}
