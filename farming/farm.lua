@@ -1,16 +1,12 @@
 require "util/turtle"
 
-local function leftCorner()
-    turtle.turnLeft()
-    turtle.forward()
-end
-local function rightCorner()
-    turtle.turnRight()
-    turtle.forward()
-end
+local last_wait = -300
 
 local function wait_for_regrow()
-    os.sleep(300)
+    local wait_for = last_wait + 300 -os.time()
+    if wait_for > 0 then
+        os.sleep(wait_for)
+    end
 end
 
 local function c_refuel()
@@ -57,7 +53,10 @@ control_blocks["minecraft:yellow_concrete"] = refuel
 local crops = {}
 crops["minecraft:nether_wart"] = {max_age = 3, seed_name = "minecraft:nether_wart"}
 
-local mineable_blocks = {"minecraft:pointed_dripstone"}
+local mineable_blocks = {
+    "minecraft:pointed_dripstone"
+    , "minecraft:sugar_cane"
+}
 
 local function step()
     local has_block_down, data_down = turtle.inspectDown()
