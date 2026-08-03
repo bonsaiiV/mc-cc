@@ -193,9 +193,7 @@ function forward_and_empty()
     turtle.turnLeft()
 end
 function test_full(test_slot)
-    turtle.select(test_slot)
-    local ret = not (turtle.getItemDetail() == nil)
-    turtle.select(1)
+    local ret = not (turtle.getItemDetail(test_slot) == nil)
     return ret
 end
 
@@ -216,8 +214,10 @@ function digShaft(len, included_sides)
 end
 
 function find_in_inventory(name)
+    local slot_data
     for slot=1, 16, 1 do
-        if turtle.getItemDetail(slot).name == name then
+        slot_data = turtle.getItemDetail(slot)
+        if slot_data and slot_data.name == name then
             turtle.select(slot)
             return true
         end
