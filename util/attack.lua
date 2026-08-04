@@ -7,7 +7,7 @@ end
 
 while true do
     turtle.attack()
-    if test_full(16) then
+    if test_full(13) then
         turtle.turnRight()
         empty_inventory(16)
         turtle.turnLeft()
