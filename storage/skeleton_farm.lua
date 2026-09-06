@@ -1,39 +1,39 @@
 local peripherals = {
     ["inv_default"] = {
-        ["type"] = "barrel",
+        ["type"] = "minecraft:barrel",
     },
     ["inv_farm_output_direct"] =  {
-        ["type"] = "barrel",
+        ["type"] = "minecraft:barrel",
     },
     ["inv_farm_output_network"] =  {
-        ["type"] = "barrel",
+        ["type"] = "minecraft:barrel",
     },
     ["inv_furnace_fuel"] =  {
-        ["type"] = "barrel",
+        ["type"] = "minecraft:barrel",
     },
     ["inv_furnace_input"] =  {
-        ["type"] = "barrel",
+        ["type"] = "minecraft:barrel",
     },
     ["inv_furnace_output"] =  {
-        ["type"] = "barrel",
+        ["type"] = "minecraft:barrel",
     },
     ["inv_oven"] =  {
         ["type"] = "minecraft:furnace",
     },
     ["inv_popped_shulker_barrel"] =  {
-        ["type"] = "barrel",
+        ["type"] = "minecraft:barrel",
     },
     ["inv_shulker_barrel"] =  {
-        ["type"] = "barrel",
+        ["type"] = "minecraft:barrel",
     },
     ["inv_shulker_dispenser"] =  {
         ["type"] = "minecraft:dispenser",
     },
     ["inv_shulker"] =  {
-        ["type"] = "barrel",
+        ["type"] = "minecraft:barrel",
     },
     ["inv_trash"] =  {
-        ["type"] = "barrel",
+        ["type"] = "minecraft:barrel",
     },
     ["rr_shulker_1"] =  {
         ["type"] = "redstone_relay",

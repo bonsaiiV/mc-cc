@@ -11,8 +11,7 @@
             "fs",
             "os",
             "textutils",
-            "peripheral",
+            "peripheral"
         ]
-        ,"disable": ["lowercase-global"]
     }
 }
