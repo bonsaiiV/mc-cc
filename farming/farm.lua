@@ -3,10 +3,11 @@ require "util/turtle"
 local last_wait = -300
 
 local function wait_for_regrow()
-    local wait_for = last_wait + 300 -os.time()
+    local wait_for = last_wait + 300 - os.time()
     if wait_for > 0 then
         os.sleep(wait_for)
     end
+    last_wait = os.time()
 end
 
 local function c_refuel()
